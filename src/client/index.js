@@ -35,7 +35,7 @@ const __NEXTAUTH = {
   // was sent from this tab/window so it can be ignored to avoid event loops.
   _clientId: Math.random().toString(36).substring(2) + Date.now().toString(36),
   // Used to store to function export by getSession() hook
-  _getSession: () => {}
+  _getSession: () => { }
 }
 
 // Add event listners on load

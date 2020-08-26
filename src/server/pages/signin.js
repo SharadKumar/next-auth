@@ -60,7 +60,7 @@ export default ({ req, csrfToken, providers, callbackUrl }) => {
             </form>}
           {(provider.type === 'email' || provider.type === 'credentials') && (i > 0) &&
             providersToRender[i - 1].type !== 'email' && providersToRender[i - 1].type !== 'credentials' &&
-              <hr />}
+            <hr />}
           {provider.type === 'email' &&
             <form action={provider.signinUrl} method='POST'>
               <input type='hidden' name='csrfToken' value={csrfToken} />

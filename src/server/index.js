@@ -1,6 +1,6 @@
 import { createHash, randomBytes } from 'crypto'
 import jwt from '../lib/jwt'
-import parseUrl from '../lib/parse-url'
+import parseUrl, { absoluteUrl } from '../lib/parse-url'
 import cookie from './lib/cookie'
 import callbackUrlHandler from './lib/callback-url-handler'
 import parseProviders from './lib/providers'
@@ -17,9 +17,9 @@ import logger from '../lib/logger'
 
 // To work properly in production with OAuth providers the NEXTAUTH_URL
 // environment variable must be set.
-if (!process.env.NEXTAUTH_URL) {
-  logger.warn('NEXTAUTH_URL', 'NEXTAUTH_URL environment variable not set')
-}
+// if (!process.env.NEXTAUTH_URL) {
+//   logger.warn('NEXTAUTH_URL', 'NEXTAUTH_URL environment variable not set')
+// }
 
 export default async (req, res, userSuppliedOptions) => {
   // To the best of my knowledge, we need to return a promise here
@@ -44,8 +44,10 @@ export default async (req, res, userSuppliedOptions) => {
       csrfToken: csrfTokenFromPost
     } = body
 
+    const { origin } = absoluteUrl(req)
+
     // @todo refactor all existing references to site, baseUrl and basePath
-    const parsedUrl = parseUrl(process.env.NEXTAUTH_URL || process.env.VERCEL_URL)
+    const parsedUrl = parseUrl(process.env.NEXTAUTH_URL || origin || process.env.VERCEL_URL)
     const baseUrl = parsedUrl.baseUrl
     const basePath = parsedUrl.basePath
 
