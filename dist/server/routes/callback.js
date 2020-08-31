@@ -177,15 +177,17 @@ var _default = function () {
         } = yield adapter.getAdapter(options);
         var verificationToken = req.query.token;
         var email = req.query.email;
-        var invite = yield getVerificationRequest(email, verificationToken, secret, provider);
+        var host = req.headers.host;
+        var invite = yield getVerificationRequest(email, host, verificationToken, secret, provider);
 
         if (!invite) {
           return redirect("".concat(baseUrl).concat(basePath, "/error?error=Verification"));
         }
 
-        yield deleteVerificationRequest(email, verificationToken, secret, provider);
-        var profile = (yield getUserByEmail(email)) || {
-          email
+        yield deleteVerificationRequest(email, host, verificationToken, secret, provider);
+        var profile = (yield getUserByEmail(email, host)) || {
+          email,
+          host
         };
         var account = {
           id: provider.id,
