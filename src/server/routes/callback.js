@@ -154,7 +154,7 @@ export default async (req, res, options, done) => {
       await deleteVerificationRequest(email, host, verificationToken, secret, provider)
 
       // If is an existing user return a user object (otherwise use placeholder)
-      const profile = await getUserByEmail(email, host) || { email, host }
+      const profile = await getUserByEmail(email, host) || { email, domain: host }
       const account = { id: provider.id, type: 'email', providerAccountId: email }
 
       // Check if user is allowed to sign in
