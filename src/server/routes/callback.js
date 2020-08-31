@@ -141,19 +141,20 @@ export default async (req, res, options, done) => {
       const { getVerificationRequest, deleteVerificationRequest, getUserByEmail } = await adapter.getAdapter(options)
       const verificationToken = req.query.token
       const email = req.query.email
+      const host = req.headers.host
 
       // Verify email and verification token exist in database
-      const invite = await getVerificationRequest(email, verificationToken, secret, provider)
+      const invite = await getVerificationRequest(email, host, verificationToken, secret, provider)
       if (!invite) {
         return redirect(`${baseUrl}${basePath}/error?error=Verification`)
       }
 
       // If verification token is valid, delete verification request token from
       // the database so it cannot be used again
-      await deleteVerificationRequest(email, verificationToken, secret, provider)
+      await deleteVerificationRequest(email, host, verificationToken, secret, provider)
 
       // If is an existing user return a user object (otherwise use placeholder)
-      const profile = await getUserByEmail(email) || { email }
+      const profile = await getUserByEmail(email, host) || { email, host }
       const account = { id: provider.id, type: 'email', providerAccountId: email }
 
       // Check if user is allowed to sign in
