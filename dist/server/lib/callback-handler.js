@@ -86,7 +86,7 @@ var _default = function () {
       }
 
       if (providerAccount.type === 'email') {
-        var userByEmail = profile.email ? yield getUserByEmail(profile.email) : null;
+        var userByEmail = profile.email ? yield getUserByEmail(profile.email, profile.host) : null;
 
         if (userByEmail) {
           if (isSignedIn) {

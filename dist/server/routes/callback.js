@@ -187,7 +187,7 @@ var _default = function () {
         yield deleteVerificationRequest(email, host, verificationToken, secret, provider);
         var profile = (yield getUserByEmail(email, host)) || {
           email,
-          host
+          domain: host
         };
         var account = {
           id: provider.id,

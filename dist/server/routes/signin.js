@@ -60,13 +60,14 @@ var _default = function () {
         getUserByEmail
       } = yield adapter.getAdapter(options);
       var email = req.body.email ? req.body.email.toLowerCase() : null;
-      var profile = (yield getUserByEmail(email)) || {
-        email
+      var profile = (yield getUserByEmail(email, req.headers.host)) || {
+        email,
+        domain: req.headers.host
       };
       var account = {
         id: provider.id,
         type: 'email',
-        providerAccountId: email
+        providerAccountId: req.headers.host
       };
 
       try {
