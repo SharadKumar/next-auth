@@ -46,8 +46,8 @@ export default async (req, res, options, done) => {
     const email = req.body.email ? req.body.email.toLowerCase() : null
 
     // If is an existing user return a user object (otherwise use placeholder)
-    const profile = await getUserByEmail(email) || { email }
-    const account = { id: provider.id, type: 'email', providerAccountId: email }
+    const profile = await getUserByEmail(email, req.headers.host) || { email, req.headers.host }
+    const account = { id: provider.id, type: 'email', providerAccountId: req.headers.host }
 
     // Check if user is allowed to sign in
     try {

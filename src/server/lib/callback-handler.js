@@ -70,7 +70,7 @@ export default async (sessionToken, profile, providerAccount, options) => {
 
     if (providerAccount.type === 'email') {
       // If signing in with an email, check if an account with the same email address exists already
-      const userByEmail = profile.email ? await getUserByEmail(profile.email) : null
+      const userByEmail = profile.email ? await getUserByEmail(profile.email, profile.host) : null
       if (userByEmail) {
         // If they are not already signed in as the same user, this flow will
         // sign them out of the current session and sign them in as the new user
