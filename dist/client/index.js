@@ -375,10 +375,6 @@ var _fetchData = function () {
 
 var _apiBaseUrl = () => {
   if (typeof window === 'undefined') {
-    if (!process.env.NEXTAUTH_URL) {
-      _logger.default.warn('NEXTAUTH_URL', 'NEXTAUTH_URL environment variable not set');
-    }
-
     return "".concat(__NEXTAUTH.baseUrl).concat(__NEXTAUTH.basePath);
   } else {
     return __NEXTAUTH.basePath;

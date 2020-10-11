@@ -297,7 +297,7 @@ const _fetchData = async (url, options = {}) => {
 const _apiBaseUrl = () => {
   if (typeof window === 'undefined') {
     // NEXTAUTH_URL should always be set explicitly to support server side calls - log warning if not set
-    if (!process.env.NEXTAUTH_URL) { logger.warn('NEXTAUTH_URL', 'NEXTAUTH_URL environment variable not set') }
+    // if (!process.env.NEXTAUTH_URL) { logger.warn('NEXTAUTH_URL', 'NEXTAUTH_URL environment variable not set') }
 
     // Return absolute path when called server side
     return `${__NEXTAUTH.baseUrl}${__NEXTAUTH.basePath}`
